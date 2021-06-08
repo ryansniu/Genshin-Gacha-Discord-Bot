@@ -1,0 +1,13 @@
+{
+    "albedo": {
+        "id": "albedo",
+        "name": "Albedo",
+        "title": "Kreideprinz",
+        "description": "A genius known as the Kreideprinz, he is the Chief Alchemist and Captain of the Investigation Team of the Knights of Favonius.",
+        "weapon_type": "Sword",
+        "element": "Geo",
+        "gender": "Male",
+        "region": "Mondstadt",
+        "rarity": 5
+    }
+}

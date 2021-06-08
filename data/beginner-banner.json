@@ -1,0 +1,10 @@
+{
+  "beginner": {
+    "id": "beginner",
+    "name": "Beginners' Wish",
+    "game-version": "1.0",
+    "featured_4star_chars": [
+      "noelle"
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "1.0": [
+    {
+      "id": "1.0",
+      "patch": 1.0,
+      "standard_3star_weaps": [
+        "black_tassel",
+        "bloodtainted_greatsword",
+        "cool_steel",
+        "debate_club",
+        "emerald_orb",
+        "ferrous_shadow",
+        "harbinger_of_dawn",
+        "magic_guide",
+        "raven_bow",
+        "sharpshooters_oath",
+        "skyrider_sword",
+        "slingshot",
+        "thrilling_tales_of_dragon_slayers"
+      ],
+      "standard_4star_weaps": [
+        "dragons_bane",
+        "eye_of_perception",
+        "favonius_codex",
+        "favonius_greatsword",
+        "favonius_lance",
+        "favonius_sword",
+        "favonius_warbow",
+        "lions_roar",
+        "rainslasher",
+        "rust",
+        "sacrificial_bow",
+        "sacrificial_fragments",
+        "sacrificial_greatsword",
+        "sacrificial_sword",
+        "the_bell",
+        "the_flute",
+        "the_stringless",
+        "the_widsith"
+      ],
+      "standard_5star_weaps": [
+        "amos_bow",
+        "aquila_favonia",
+        "lost_prayer_to_the_sacred_winds",
+        "primordial_jade_winged-spear",
+        "skyward_atlas",
+        "skyward_blade",
+        "skyward_harp",
+        "skyward_pride",
+        "skyward_spine",
+        "wolfs_gravestone"
+      ]
+    }
+  ]
+}

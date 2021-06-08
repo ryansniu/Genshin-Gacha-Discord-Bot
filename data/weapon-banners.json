@@ -1,0 +1,15 @@
+{
+  "example": {
+    "id": "example",
+    "name": "name",
+    "game-version": "1.0",
+    "start-date": "2020-09-28",
+    "end-date": "2020-10-18",
+    "featured_4star_chars": [
+      ""
+    ],
+    "featured_5star_chars": [
+      ""
+    ]
+  }
+}

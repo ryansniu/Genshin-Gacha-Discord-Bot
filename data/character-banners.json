@@ -1,0 +1,223 @@
+{
+  "venti-1": {
+    "id": "venti-1",
+    "name": "Ballad in Goblets",
+    "game-version": "1.0",
+    "start-date": "2020-09-28",
+    "end-date": "2020-10-18",
+    "featured_4star_chars": [
+      "venti"
+    ],
+    "featured_5star_chars": [
+      "barbara",
+      "fischl",
+      "xiangling"
+    ]
+  },
+  "klee-1": {
+    "id": "klee-1",
+    "name": "Sparkling Steps",
+    "game-version": "1.0",
+    "start-date": "2020-10-20",
+    "end-date": "2020-11-10",
+    "featured_4star_chars": [
+      "klee"
+    ],
+    "featured_5star_chars": [
+      "noelle",
+      "sucrose",
+      "xingqiu"
+    ]
+  },
+  "tartaglia-1": {
+    "id": "tartaglia-1",
+    "name": "Farewell of Snezhnaya",
+    "game-version": "1.1",
+    "start-date": "2020-11-11",
+    "end-date": "2020-12-01",
+    "featured_4star_chars": [
+      "tartaglia"
+    ],
+    "featured_5star_chars": [
+      "beidou",
+      "diona",
+      "ningguang"
+    ]
+  },
+  "zhongli-1": {
+    "id": "zhongli-1",
+    "name": "Gentry of Hermitage",
+    "game-version": "1.1",
+    "start-date": "2020-12-01",
+    "end-date": "2020-12-22",
+    "featured_4star_chars": [
+      "zhongli"
+    ],
+    "featured_5star_chars": [
+      "chongyun",
+      "xinyan",
+      "razor"
+    ]
+  },
+  "albedo-1": {
+    "id": "albedo-1",
+    "name": "Secretum Secretorum",
+    "game-version": "1.2",
+    "start-date": "2020-12-23",
+    "end-date": "2021-01-12",
+    "featured_4star_chars": [
+      "albedo"
+    ],
+    "featured_5star_chars": [
+      "bennett",
+      "fischl",
+      "sucrose"
+    ]
+  },
+  "ganyu-1": {
+    "id": "ganyu-1",
+    "name": "Adrift in the Harbor",
+    "game-version": "1.2",
+    "start-date": "2021-01-12",
+    "end-date": "2021-02-02",
+    "featured_4star_chars": [
+      "ganyu"
+    ],
+    "featured_5star_chars": [
+      "noelle",
+      "xiangling",
+      "xinqiu"
+    ]
+  },
+  "xiao-1": {
+    "id": "xiao-1",
+    "name": "Invitation to Mundane Life",
+    "game-version": "1.3",
+    "start-date": "2021-02-03",
+    "end-date": "2021-02-17",
+    "featured_4star_chars": [
+      "xiao"
+    ],
+    "featured_5star_chars": [
+      "beidou",
+      "diona",
+      "xinyan"
+    ]
+  },
+  "keqing-1": {
+    "id": "keqing-1",
+    "name": "Dance of Lanterns",
+    "game-version": "1.3",
+    "start-date": "2021-02-17",
+    "end-date": "2021-03-02",
+    "featured_4star_chars": [
+      "keqing"
+    ],
+    "featured_5star_chars": [
+      "barbara",
+      "bennett",
+      "ningguang"
+    ]
+  },
+  "hu_tao-1": {
+    "id": "hu_tao-1",
+    "name": "Moment of Bloom",
+    "game-version": "1.3",
+    "start-date": "2021-03-02",
+    "end-date": "2021-03-16",
+    "featured_4star_chars": [
+      "hu_tao"
+    ],
+    "featured_5star_chars": [
+      "chongyun",
+      "xiangling",
+      "xinqiu"
+    ]
+  },
+  "venti-2": {
+    "id": "venti-1",
+    "name": "Ballad in Goblets",
+    "game-version": "1.4",
+    "start-date": "2021-03-17",
+    "end-date": "2021-04-06",
+    "featured_4star_chars": [
+      "venti"
+    ],
+    "featured_5star_chars": [
+      "noelle",
+      "razor",
+      "sucrose"
+    ]
+  },
+  "tartaglia-2": {
+    "id": "tartaglia-2",
+    "name": "Farewell of Snezhnaya",
+    "game-version": "1.1",
+    "start-date": "2021-04-06",
+    "end-date": "2021-04-27",
+    "featured_4star_chars": [
+      "tartaglia"
+    ],
+    "featured_5star_chars": [
+      "barbara",
+      "fischl",
+      "rosaria"
+    ]
+  },
+  "zhongli-2": {
+    "id": "zhongli-2",
+    "name": "Gentry of Hermitage",
+    "game-version": "1.5",
+    "start-date": "2021-04-28",
+    "end-date": "2021-05-18",
+    "featured_4star_chars": [
+      "zhongli"
+    ],
+    "featured_5star_chars": [
+      "diona",
+      "noelle",
+      "yanfei"
+    ]
+  },
+  "eula-1": {
+    "id": "eula-1",
+    "name": "Born of Ocean Swell",
+    "game-version": "1.5",
+    "start-date": "2021-05-18",
+    "end-date": "2021-06-08",
+    "featured_4star_chars": [
+      "eula"
+    ],
+    "featured_5star_chars": [
+      "beidou",
+      "xingqiu",
+      "xinyan"
+    ]
+  },
+  "klee-2": {
+    "id": "klee-2",
+    "name": "Sparkling Steps",
+    "game-version": "1.6",
+    "start-date": "2021-06-09",
+    "end-date": "2021-06-29",
+    "featured_4star_chars": [
+      "klee"
+    ],
+    "featured_5star_chars": [
+      "barbara",
+      "fischl",
+      "sucrose"
+    ]
+  },
+  "kazuha-1": {
+    "id": "kazuha-1",
+    "name": "Leaves in the Wind",
+    "game-version": "1.6",
+    "start-date": "2021-06-29",
+    "end-date": "",
+    "featured_4star_chars": [
+      "kazuha"
+    ],
+    "featured_5star_chars": []
+  }
+}

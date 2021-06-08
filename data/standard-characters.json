@@ -1,0 +1,56 @@
+{
+  "1.0": [
+    {
+      "id": "1.0",
+      "patch": 1.0,
+      "standard_4star_chars": [
+        "barbara",
+        "beidou",
+        "bennett",
+        "chongyun",
+        "fischl",
+        "ningguang",
+        "noelle",
+        "razor",
+        "sucrose",
+        "xiangling",
+        "xingqiu"
+      ],
+      "standard_5star_chars": [
+        "diluc",
+        "jean",
+        "keqing",
+        "mona",
+        "qiqi"
+      ]
+    }
+  ],
+  "1.2": [
+    {
+      "id": "1.2",
+      "patch": 1.2,
+      "standard_4star_chars": [
+        "diona",
+        "xinyan"
+      ]
+    }
+  ],
+  "1.5": [
+    {
+      "id": "1.5",
+      "patch": 1.5,
+      "standard_4star_chars": [
+        "rosaria"
+      ]
+    }
+  ],
+  "1.6": [
+    {
+      "id": "1.6",
+      "patch": 1.6,
+      "standard_4star_chars": [
+        "yanfei"
+      ]
+    }
+  ]
+}
