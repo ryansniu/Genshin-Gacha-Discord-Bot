@@ -12,7 +12,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='-')
 
-standardBanner = gacha.StandardBanner()
+current_genshin_version = 1.6
 
 @bot.event
 async def on_ready():
@@ -37,39 +37,51 @@ async def reset(ctx):
     await ctx.send("User deleted!" if user.delete_user(ctx.guild, ctx.author) else "User does not exists!")
     
 @bot.command(name='one_pull', help='Simulates pulling on the banner once')
-async def one_pull(ctx, banner : float):
+async def one_pull(ctx, banner_id, version = current_genshin_version):
     #if not enough primos, say you don't have enough primos
     player = user.get_player(ctx.guild, ctx.author)
-    if player is not None:
-        wish = standardBanner.one_pull(player, banner)
+    banner =  gacha.get_banner(banner_id, version)
+    if player is not None and banner is not None:
+        wish = banner.one_pull(player)
         player.write_to_db()
         await ctx.send(wish)
     else:
-        await ctx.send("Player is not registered!")
+        if player is None:
+            await ctx.send("Player is not registered!")
+        if banner is None:
+            await ctx.send("Banner does not exist!")
 
 @bot.command(name='ten_pull', help='Simulates pulling on the banner ten times')
-async def ten_pull(ctx, banner : float):
+async def ten_pull(ctx, banner_id, version = current_genshin_version):
     #if not enough primos, say you don't have enough primos
     player = user.get_player(ctx.guild, ctx.author)
-    if player is not None:
-        wishes = [standardBanner.one_pull(player, banner) for _ in range(10)]
+    banner = gacha.get_banner(banner_id, version)
+    if player is not None and banner is not None:
+        wishes = [banner.one_pull(player) for _ in range(10)]
         player.write_to_db()
         for wish in wishes:
             await ctx.send(wish)
             await asyncio.sleep(0.8)
     else:
-        await ctx.send("Player is not registered!")
+        if player is None:
+            await ctx.send("Player is not registered!")
+        if banner is None:
+            await ctx.send("Banner does not exist!")
 
 @bot.command(name='debug_pull', help='Simulates pulling on the banner 10X times')
-async def debug_pull(ctx, banner : float, num : int):
+async def debug_pull(ctx, banner_id, num : int, version = current_genshin_version):
     #if not enough primos, say you don't have enough primos
     player = user.get_player(ctx.guild, ctx.author)
-    if player is not None:
+    banner = gacha.get_banner(banner_id, version)
+    if player is not None and banner is not None:
         for _ in range(10 * num):
-            standardBanner.one_pull(player, banner)
+            banner.one_pull(player)
         player.write_to_db()
         await ctx.send(player.get_debug_info())
     else:
-        await ctx.send("Player is not registered!")
+        if player is None:
+            await ctx.send("Player is not registered!")
+        if banner is None:
+            await ctx.send("Banner does not exist!")
 
 bot.run(TOKEN)

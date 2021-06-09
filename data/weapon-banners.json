@@ -1,15 +1,247 @@
 {
-  "example": {
-    "id": "example",
-    "name": "name",
-    "game-version": "1.0",
+  "epitome-invocation-1": {
+    "id": "epitome-invocation-1",
+    "name": "Epitome Invocation",
+    "game-version": 1.0,
     "start-date": "2020-09-28",
     "end-date": "2020-10-18",
-    "featured_4star_chars": [
-      ""
+    "featured_5star_weaps": [
+      "amos_bow",
+      "aquila_favonia"
     ],
-    "featured_5star_chars": [
-      ""
+    "featured_4star_weaps": [
+      "favonius_lance",
+      "the_bell",
+      "the_flute",
+      "the_stringless",
+      "the_widsith"
     ]
+  },
+  "epitome-invocation-2": {
+    "id": "epitome-invocation-2",
+    "name": "Epitome Invocation",
+    "game-version": 1.0,
+    "start-date": "2020-10-20",
+    "end-date": "2020-11-09",
+    "featured_5star_weaps": [
+      "lost_prayer_to_the_sacred_winds",
+      "wolfs_gravestone"
+    ],
+    "featured_4star_weaps": [
+      "dragons_bane",
+      "sacrificial_bow",
+      "sacrificial_fragments",
+      "sacrificial_greatsword",
+      "sacrificial_sword"
+    ]
+  },
+  "epitome-invocation-3": {
+    "id": "epitome-invocation-3",
+    "name": "Epitome Invocation",
+    "game-version": 1.1,
+    "start-date": "2020-11-11",
+    "end-date": "2020-12-01",
+    "featured_5star_weaps": [
+      "memory_of_dust",
+      "skyward_harp"
+    ],
+    "featured_4star_weaps": [
+      "eye_of_perception",
+      "favonius_lance",
+      "rainslasher",
+      "rust",
+      "the_flute"
+    ]
+  },
+  "epitome-invocation-4": {
+    "id": "epitome-invocation-4",
+    "name": "Epitome Invocation",
+    "game-version": 1.1,
+    "start-date": "2020-12-01",
+    "end-date": "2020-12-22",
+    "featured_5star_weaps": [
+      "the_unforged",
+      "vortex_vanquisher"
+    ],
+    "featured_4star_weaps": [
+      "dragons_bane",
+      "favonius_codex",
+      "favonius_warbow",
+      "lions_roar",
+      "the_bell"
+    ]
+  },
+  "epitome-invocation-5": {
+    "id": "epitome-invocation-5",
+    "name": "Epitome Invocation",
+    "game-version": 1.2,
+    "start-date": "2020-12-23",
+    "end-date": "2021-01-12",
+    "featured_5star_weaps": [
+      "skyward_atlas",
+      "summit_shaper"
+    ],
+    "featured_4star_weaps": [
+      "favonius_greatsword",
+      "favonius_lance",
+      "favonius_sword",
+      "sacrificial_fragments",
+      "the_stringless"
+    ]
+  },
+  "epitome-invocation-6": {
+    "id": "epitome-invocation-6",
+    "name": "Epitome Invocation",
+    "game-version": 1.2,
+    "start-date": "2021-01-12",
+    "end-date": "2021-02-02",
+    "featured_5star_weaps": [
+      "amos_bow",
+      "skyward_pride"
+    ],
+    "featured_4star_weaps": [
+      "eye_of_perception",
+      "dragons_bane",
+      "favonius_warbow",
+      "sacrificial_sword",
+      "the_bell"
+    ]
+  },
+  "epitome-invocation-7": {
+    "id": "epitome-invocation-7",
+    "name": "Epitome Invocation",
+    "game-version": 1.3,
+    "start-date": "2021-02-03",
+    "end-date": "2021-02-23",
+    "featured_5star_weaps": [
+      "primordial_jade_cutter",
+      "primordial_jade_winged-spear"
+    ],
+    "featured_4star_weaps": [
+      "eye_of_perception",
+      "favonius_lance",
+      "rust",
+      "sacrificial_greatsword",
+      "the_flute"
+    ]
+  },
+  "epitome-invocation-8": {
+    "id": "epitome-invocation-8",
+    "name": "Epitome Invocation",
+    "game-version": 1.3,
+    "start-date": "2021-02-23",
+    "end-date": "2021-03-16",
+    "featured_5star_weaps": [
+      "staff_of_homa",
+      "wolfs_gravestone"
+    ],
+    "featured_4star_weaps": [
+      "lions_roar",
+      "lithic_blade",
+      "lithic_spear",
+      "sacrificial_bow",
+      "the_widsith"
+    ]
+  },
+  "epitome-invocation-9": {
+    "id": "epitome-invocation-9",
+    "name": "Epitome Invocation",
+    "game-version": 1.4,
+    "start-date": "2021-03-17",
+    "end-date": "2021-04-06",
+    "featured_5star_weaps": [
+      "elegy_for_the_end",
+      "skyward_blade"
+    ],
+    "featured_4star_weaps": [
+      "dragons_bane",
+      "favonius_greatsword",
+      "favonius_warbow",
+      "the_alley_flash",
+      "wine_and_song"
+    ]
+  },
+  "epitome-invocation-10": {
+    "id": "epitome-invocation-10",
+    "name": "Epitome Invocation",
+    "game-version": 1.4,
+    "start-date": "2021-04-06",
+    "end-date": "2021-04-27",
+    "featured_5star_weaps": [
+      "lost_prayer_to_the_sacred_winds",
+      "skyward_harp"
+    ],
+    "featured_4star_weaps": [
+      "alley_hunter",
+      "favonius_codex",
+      "favonius_greatsword",
+      "favonius_lance",
+      "sacrificial_greatsword"
+    ]
+  },
+  "epitome-invocation-11": {
+    "id": "epitome-invocation-11",
+    "name": "Epitome Invocation",
+    "game-version": 1.5,
+    "start-date": "2021-04-28",
+    "end-date": "2021-05-18",
+    "featured_5star_weaps": [
+      "memory_of_dust",
+      "summit_shaper"
+    ],
+    "featured_4star_weaps": [
+      "eye_of_perception",
+      "lithic_blade",
+      "lithic_spear",
+      "sacrificial_bow",
+      "the_flute"
+    ]
+  },
+  "epitome-invocation-12": {
+    "id": "epitome-invocation-12",
+    "name": "Epitome Invocation",
+    "game-version": 1.5,
+    "start-date": "2021-05-18",
+    "end-date": "2021-06-08",
+    "featured_5star_weaps": [
+      "aquila_favonia",
+      "song_of_broken_pines"
+    ],
+    "featured_4star_weaps": [
+      "dragons_bane",
+      "rainslasher",
+      "rust",
+      "sacrificial_fragments",
+      "sacrificial_sword"
+    ]
+  },
+  "epitome-invocation-13": {
+    "id": "epitome-invocation-13",
+    "name": "Epitome Invocation",
+    "game-version": 1.6,
+    "start-date": "2021-06-09",
+    "end-date": "2021-06-29",
+    "featured_5star_weaps": [
+      "lost_prayer_to_the_sacred_winds",
+      "skyward_pride"
+    ],
+    "featured_4star_weaps": [
+      "lions_roar",
+      "favonius_lance",
+      "mitternachts_waltz",
+      "the_bell",
+      "the_widsitch"
+    ]
+  },
+  "epitome-invocation-14": {
+    "id": "epitome-invocation-14",
+    "name": "Epitome Invocation",
+    "game-version": 1.6,
+    "start-date": "2021-06-29",
+    "end-date": "",
+    "featured_5star_weaps": [
+      "freedom-sworn"
+    ],
+    "featured_4star_weaps": []
   }
 }

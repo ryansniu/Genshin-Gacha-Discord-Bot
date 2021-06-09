@@ -16,7 +16,26 @@ class BannerType(Enum):
     def has_key(cls, name):
         return name in cls.__members__
 
+def get_banner(banner_id, version):
+    if banner_id == 'beginner':
+        return BeginnerBanner()
+    elif banner_id == 'standard':
+        return StandardBanner(version)
+    else:
+        character_banners = json.load(open('data/character-banners.json'))
+        if banner_id in character_banners:
+            return EventBanner(True, banner_id)
+        weapon_banners = json.load(open('data/weapon-banners.json'))
+        if banner_id in weapon_banners:
+            return EventBanner(False, banner_id)
+        return None
+
 class Banner(ABC):
+    standard_5star_rate = 0.006
+    soft_pity_5star_lin_rate = 0.994 / 17
+    standard_4star_rate = 0.051
+    soft_pity_4star_rate = 0.551
+
     def __init__(self, banner_type, banner_id = None):
         self.banner_type = banner_type
         self.import_data()
@@ -36,16 +55,7 @@ class BeginnerBanner(Banner):
     pass
 
 class StandardBanner(Banner):
-    current_version = 1.5
-    #excluded_4star_chars = ["amber", "kaeya", "lisa"]
-
-    standard_5star_rate = 0.006
-    soft_pity_5star_lin_rate = 0.994 / 17
-    standard_4star_rate = 0.051
-    soft_pity_4star_rate = 0.551
-    featured_chance = 0.5
-
-    def __init__(self, version = current_version):
+    def __init__(self, version):
         self.name = "Standard"
         self.version = version
         Banner.__init__(self, BannerType.STANDARD)
@@ -61,9 +71,9 @@ class StandardBanner(Banner):
             version_contents = characters[version][0]
             if version_contents['patch'] <= self.version:
                 if 'standard_5star_chars' in version_contents:
-                    self.standard_5star_chars = version_contents['standard_5star_chars']
+                    self.standard_5star_chars += version_contents['standard_5star_chars']
                 if 'standard_4star_chars' in version_contents:
-                    self.standard_4star_chars = version_contents['standard_4star_chars']
+                    self.standard_4star_chars += version_contents['standard_4star_chars']
         
         self.standard_5star_items = self.standard_5star_chars
         self.standard_4star_items = self.standard_4star_chars
@@ -77,9 +87,8 @@ class StandardBanner(Banner):
                     self.standard_4star_items += version_contents['standard_4star_weaps']
                 if 'standard_3star_weaps' in version_contents:
                     self.standard_3star_items += version_contents['standard_3star_weaps']
-        #self.standard_4star_items = [item for item in self.standard_4star_items if item not in self.excluded_4star_chars]
 
-    def one_pull(self, player, banner):
+    def one_pull(self, player):
         # update player rolls and pity
         player.increment_rolls(self.banner_type) 
         pity = player.get_pity(self.banner_type)
@@ -117,53 +126,88 @@ class StandardBanner(Banner):
         pass
 
 
-'''
-class CharacterBanner(Banner):
+class EventBanner(Banner):
     excluded_4star_chars = ["amber", "kaeya", "lisa"]
-    standard_5star_chars = ["Diluc", "Jean", "Keqing", "Mona", "Qiqi"]
-    standard_5star_weaps = ["Skyward Harp", "Amos' Bow", "Skyward Atlas", "Lost Prayer to the Sacred Winds", "Skyward Pride", "Wolf's Gravestone", "Skyward Spine", "Primordial Jade Winged-Spear", "Skyward Blade", "Aquila Favonia"]
-    standard_4star_chars = ["Amber", "Barbara", "Beidou", "Bennett", "Chongyun", "Diona", "Fischl", "Kaeya", "Lisa", "Ningguang", "Noelle", "Razor", "Rosaria", "Sucrose", "Xiangling", "Xingqiu", "Xinyan", "Yanfei"]
-    standard_4star_weaps = ["Favonius Warbow", "Sacrificial Bow", "The Stringless", "Rust", "Favonius Codex", "Sacrificial Fragments", "The Widsith", "Eye of Perception", "Favonius Greatsword", "Sacrificial Greatsword", "The Bell", "Rainslasher", "Favonius Lance", "Dragon's Bane", "Favonius Sword", "Sacrificial Sword", "The Flute", "Lion's Roar"]
-    standard_3star_weaps = ["3-Star Weapon"]
-
-    standard_5star_rate = 0.006
-    soft_pity_5star_lin_rate = 0.994 / 17
-    standard_4star_rate = 0.051
-    soft_pity_4star_rate = 0.551
     featured_chance = 0.5
 
-    def __init__(self, name = standard_name, featured_5star_items = [], featured_4star_items = []):
-        self.name = name
-        self.is_event_banner = self.name != self.standard_name
-        self.featured_5star_items = featured_5star_items
-        self.featured_4star_items = featured_4star_items
+    def __init__(self, is_char_banner, banner_id):
+        self.is_char_banner = is_char_banner
+        if not self.is_char_banner:
+            self.standard_5star_rate = 0.007
+            self.soft_pity_5star_lin_rate = 0.993 / 17
+            self.standard_4star_rate = 0.06
+            self.soft_pity_4star_rate = 0.47
+            self.featured_chance = 0.75
+
+        self.banner_id = banner_id
+        Banner.__init__(self, BannerType.CHARACTER if self.is_char_banner else BannerType.WEAPON)
+    
+    def import_data(self):
+        standard_characters = json.load(open('data/standard-characters.json'))
+        standard_weapons = json.load(open('data/standard-weapons.json'))
+        event_banner = json.load(open('data/character-banners.json' if self.is_char_banner else 'data/weapon-banners.json'))
+        self.banner_data = event_banner[self.banner_id]
+        self.version = self.banner_data['game-version']
+
+        # get rid of this later when i can look characters and weapons up from the json
+        self.standard_5star_chars = []
+        self.standard_4star_chars = []
+        for version in standard_characters:
+            version_contents = standard_characters[version][0]
+            if version_contents['patch'] <= self.version:
+                if self.is_char_banner and 'standard_5star_chars' in version_contents:
+                    self.standard_5star_chars += version_contents['standard_5star_chars']
+                if 'standard_4star_chars' in version_contents:
+                    self.standard_4star_chars += version_contents['standard_4star_chars']
+        self.standard_4star_chars = [char for char in self.standard_4star_chars if char not in self.excluded_4star_chars]
+        
+        # get rid of this later when i can look characters and weapons up from the json
+        self.standard_5star_weaps = []
+        self.standard_4star_weaps = []
+        self.standard_3star_items = []
+        for version in standard_weapons:
+            version_contents = standard_weapons[version][0]
+            if version_contents['patch'] <= self.version:
+                if not self.is_char_banner and 'standard_5star_weaps' in version_contents:
+                    self.standard_5star_weaps += version_contents['standard_5star_weaps']
+                if 'standard_4star_weaps' in version_contents:
+                    self.standard_4star_weaps += version_contents['standard_4star_weaps']
+                if 'standard_3star_weaps' in version_contents:
+                    self.standard_3star_items += version_contents['standard_3star_weaps']
+        
+        # get the featured items
+        self.featured_5star_items = self.banner_data['featured_5star_chars' if self.is_char_banner else 'featured_5star_weaps']
+        self.featured_4star_items = self.banner_data['featured_4star_chars' if self.is_char_banner else 'featured_4star_weaps']
+        
+        self.standard_5star_items = [item for item in (self.standard_5star_chars + self.standard_5star_weaps) if item not in self.featured_5star_items]
+        self.standard_4star_items = [item for item in (self.standard_4star_chars + self.standard_4star_weaps) if item not in self.featured_4star_items]
 
     def get_5star_pool(self, pity):
-        if self.is_event_banner and (pity.featured_5star_pity or random.random() < featured_chance): # roll a featured 5-star character
-            pity.hard_reset_5star_pity()
+        if pity.get_value('feat5StarPity') or random.random() < self.featured_chance: # roll a featured 5-star item
+            pity.reset(5, False)
             return self.featured_5star_items
-        else: # roll a standard 5-star character
-            pity.soft_reset_5star_pity()
-            return self.standard_5star_chars + self.standard_5star_weaps
+        else: # roll a standard 5-star item
+            pity.reset(5, True)
+            return self.standard_5star_items
 
     def get_4star_pool(self, pity):
-        if self.is_event_banner and (pity.featured_4star_pity or random.random() < featured_chance): # roll a featured 4-star character
-            pity.hard_reset_4star_pity()
+        if pity.get_value('feat4StarPity') or random.random() < self.featured_chance: # roll a featured 4-star item
+            pity.reset(4, False)
             return self.featured_4star_items
-        else: # roll a standard 4-star character
-            pity.soft_reset_4star_pity()
-            return self.standard_4star_chars + self.standard_4star_weaps
+        else: # roll a standard 4-star item
+            pity.reset(4, True)
+            return self.standard_4star_items
 
     def get_3star_pool(self, pity):
-        return self.standard_3star_weaps
+        return self.standard_3star_items
 
-    def one_pull(self, player, banner):
+    def one_pull(self, player):
         rarity = 0
         rarity_pool = []
 
         # update player rolls and pity
-        player.increment_rolls(self.is_event_banner) 
-        pity = player.get_pity(self.is_event_banner)
+        player.increment_rolls(self.banner_type) 
+        pity = player.get_pity(self.banner_type)
 
         current_5star_pity = pity.get_value('curr5StarPity')
         current_4star_pity = pity.get_value('curr4StarPity')
@@ -185,33 +229,16 @@ class CharacterBanner(Banner):
         elif rarity == 3:
             rarity_pool = self.get_3star_pool(pity)
         wish = random.choices(rarity_pool)[0]
+        player.debug_info[rarity - 3] += 1
 
         emoji = ":blue_square:"
         if rarity == 5:
-            emoji = ":yellow_circle:" if (wish in self.standard_5star_chars + self.featured_5star_items) else ":yellow_square:"
+            emoji = ":yellow_circle:" if wish in self.standard_5star_chars or (self.is_char_banner and wish in self.featured_5star_items) else ":yellow_square:"
         elif rarity == 4:
-            emoji = ":purple_circle:" if (wish in self.standard_4star_chars + self.featured_4star_items) else ":purple_square:"
+            emoji = ":purple_circle:" if wish in self.standard_4star_chars or (self.is_char_banner and wish in self.featured_4star_items) else ":purple_square:"
         
         return emoji + " " + wish
 
     # returns who's featured
     def get_info(self):
         pass
-
-class WeaponBanner(Banner):
-    standard_5star_chars = []
-    standard_5star_weaps = ["Skyward Harp", "Amos' Bow", "Skyward Atlas", "Lost Prayer to the Sacred Winds", "Skyward Pride", "Wolf's Gravestone", "Skyward Spine", "Primordial Jade Winged-Spear", "Skyward Blade", "Aquila Favonia"]
-
-    standard_5star_rate = 0.007
-    soft_pity_5star_lin_rate = 0.993 / 17
-    standard_4star_rate = 0.06
-    soft_pity_4star_rate = 0.551
-    featured_chance = 0.75
-
-    def __init__(self, id):
-        self.name = name
-        self.is_event_banner = self.name != self.standard_name
-        self.featured_5star_items = featured_5star_items
-        self.featured_4star_items = featured_4star_items
-
-'''

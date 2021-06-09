@@ -19,8 +19,8 @@ class Pity:
     pity_ids = ['curr4StarPity', 'feat4StarPity', 'curr5StarPity', 'feat5StarPity']
 
     def __init__(self, doc, banner_type):
-        self.data = doc[str(banner_type).lower() + 'Pity']
-
+        self.data = doc[str(banner_type.name).lower() + 'Pity']
+        
         self.hard_5star_pity = 80 if banner_type == BannerType.WEAPON else 90
         self.soft_5star_pity = 64 if banner_type == BannerType.WEAPON else 74
         self.hard_4star_pity = 9 if banner_type == BannerType.WEAPON else 10
@@ -50,8 +50,8 @@ class Player:
         self.doc_ref = doc_ref
         self.doc = self.doc_ref.get().to_dict()
         self.pities = dict()
-        for banner_type in BannerType.__members__:
-            self.pities[str(banner_type)] = Pity(self.doc, banner_type)
+        for banner_type in BannerType:
+            self.pities[str(banner_type.name)] = Pity(self.doc, banner_type)
 
         self.debug_info = [0, 0, 0]
 
