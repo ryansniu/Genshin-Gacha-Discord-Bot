@@ -77,8 +77,15 @@ class Player:
     def write_to_db(self):
         self.doc_ref.set(self.doc)
 
+    def get_num_beginner_rolls(self):
+        return self.doc['numBeginnerRolls']
+
+    def increment_beginner_rolls(self):
+        self.doc['numBeginnerRolls'] += 1
+
     def reset(self):
         self.doc['totalRolls'] = 0
+        self.doc['numBeginnerRolls'] = 0
         for banner_type in BannerType:
             self.pities[banner_type.name].reset_all()
 
@@ -98,7 +105,7 @@ def get_unique_id(guild, member):
 def create_new_user(guild, member):
     doc_ref = db.collection('users').document(get_unique_id(guild, member))
     if not doc_ref.get().exists:
-        doc = {'username': member.name, 'guild': guild.name, 'totalRolls': 0}
+        doc = {'username': member.name, 'guild': guild.name, 'totalRolls': 0, 'numBeginnerRolls': 0}
         for banner_type in BannerType.__members__:
             doc[str(banner_type).lower() + 'Pity'] = dict(zip(Pity.pity_ids, Pity.default_vals))
         doc_ref.set(doc)

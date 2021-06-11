@@ -52,7 +52,62 @@ class Banner(ABC):
 # No weapons except 3 stars
 # Has its own pity (which does not affect Event or Standard banner pity)
 class BeginnerBanner(Banner):
-    pass
+    excluded_4star_chars = ['amber', 'kaeya', 'lisa', 'noelle']
+    guaranteed_4star_char = 'noelle'
+
+    def __init__(self):
+        self.name = "Beginner"
+        Banner.__init__(self, BannerType.BEGINNER)
+    
+    def import_data(self):
+        characters = json.load(open('data/standard-characters.json'))
+        weapons = json.load(open('data/standard-weapons.json'))
+        self.standard_5star_chars = characters['1.0'][0]['standard_5star_chars']
+        self.standard_4star_chars = [char for char in characters['1.0'][0]['standard_4star_chars'] if char not in self.excluded_4star_chars]
+        self.standard_3star_weaps = weapons['1.0'][0]['standard_3star_weaps']
+
+    def ten_pull(self, player):
+        player.increment_beginner_rolls()
+        pity = player.get_pity(self.banner_type)
+        all_pulls = []
+        for _ in range(10):
+            player.increment_rolls(self.banner_type)
+            
+            # calculate current rarity rates
+            current_5star_pity = pity.get_value('curr5StarPity')
+            current_4star_pity = pity.get_value('curr4StarPity')
+            curr_5star_rate = self.standard_5star_rate + max(0, current_5star_pity - pity.soft_5star_pity + 1) * self.soft_pity_5star_lin_rate
+            curr_4star_rate = self.soft_pity_4star_rate if current_4star_pity >= pity.soft_4star_pity else self.standard_4star_rate
+
+            # choose a rarity
+            rarity = 0
+            if current_5star_pity >= pity.hard_5star_pity: # check for guaranteed 5-star pity
+                rarity = 5
+            elif current_4star_pity >= pity.hard_4star_pity: # check for guaranteed 4+star pity
+                rarity = 5 if (player.get_num_beginner_rolls() > 1) and (random.random() < self.standard_5star_rate) else 4
+            else: # standard or soft pity roll
+                rarity = 5 if random.random() < curr_5star_rate else 4 if random.random() < curr_4star_rate else 3
+            pity.reset(rarity, False)
+
+            # get the pool of potential items and then one at random
+            rarity_pool = []
+            if rarity == 5:
+                rarity_pool = self.standard_5star_chars
+            elif rarity == 4:
+                if player.get_num_beginner_rolls() > 1 or self.guaranteed_4star_char in all_pulls:
+                    rarity_pool = self.standard_4star_chars
+                else:
+                    rarity_pool = [self.guaranteed_4star_char]
+            elif rarity == 3:
+                rarity_pool = self.standard_3star_weaps
+            wish = random.choices(rarity_pool)[0]
+            player.debug_info[rarity - 3] += 1
+
+            # formats the output
+            emoji = ":yellow_circle:" if rarity == 5 else ":purple_circle:" if rarity == 4 else ":blue_square:"
+            all_pulls.append(emoji + " " + wish)
+        return all_pulls
+
 
 class StandardBanner(Banner):
     def __init__(self, version):
@@ -127,7 +182,7 @@ class StandardBanner(Banner):
 
 
 class EventBanner(Banner):
-    excluded_4star_chars = ["amber", "kaeya", "lisa"]
+    excluded_4star_chars = ['amber', 'kaeya', 'lisa']
     featured_chance = 0.5
 
     def __init__(self, is_char_banner, banner_id):

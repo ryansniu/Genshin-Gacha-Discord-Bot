@@ -41,7 +41,7 @@ async def one_pull(ctx, banner_id, version = current_genshin_version):
     #if not enough primos, say you don't have enough primos
     player = user.get_player(ctx.guild, ctx.author)
     banner =  gacha.get_banner(banner_id, version)
-    if player is not None and banner is not None:
+    if player is not None and banner is not None and banner.banner_type != gacha.BannerType.BEGINNER:
         wish = banner.one_pull(player)
         player.write_to_db()
         await ctx.send(wish)
@@ -50,14 +50,18 @@ async def one_pull(ctx, banner_id, version = current_genshin_version):
             await ctx.send("Player is not registered!")
         if banner is None:
             await ctx.send("Banner does not exist!")
+        if banner.banner_type == gacha.BannerType.BEGINNER:
+            await ctx.send("Cannot roll once on Beginner Banner!")
 
 @bot.command(name='ten_pull', help='Simulates pulling on the banner ten times')
 async def ten_pull(ctx, banner_id, version = current_genshin_version):
     #if not enough primos, say you don't have enough primos
     player = user.get_player(ctx.guild, ctx.author)
     banner = gacha.get_banner(banner_id, version)
-    if player is not None and banner is not None:
-        wishes = [banner.one_pull(player) for _ in range(10)]
+    if banner.banner_type == gacha.BannerType.BEGINNER and player.get_num_beginner_rolls() >= 2:
+        await ctx.send("Cannot pull more than twice on Beginner Banner!")
+    elif player is not None and banner is not None:
+        wishes = [banner.one_pull(player) for _ in range(10)] if banner.banner_type != gacha.BannerType.BEGINNER else banner.ten_pull(player)
         player.write_to_db()
         for wish in wishes:
             await ctx.send(wish)
@@ -67,13 +71,14 @@ async def ten_pull(ctx, banner_id, version = current_genshin_version):
             await ctx.send("Player is not registered!")
         if banner is None:
             await ctx.send("Banner does not exist!")
+            
 
 @bot.command(name='debug_pull', help='Simulates pulling on the banner 10X times')
 async def debug_pull(ctx, banner_id, num : int, version = current_genshin_version):
     #if not enough primos, say you don't have enough primos
     player = user.get_player(ctx.guild, ctx.author)
     banner = gacha.get_banner(banner_id, version)
-    if player is not None and banner is not None:
+    if player is not None and banner is not None and banner.banner_type != gacha.BannerType.BEGINNER:
         for _ in range(10 * num):
             banner.one_pull(player)
         player.write_to_db()
@@ -83,5 +88,7 @@ async def debug_pull(ctx, banner_id, num : int, version = current_genshin_versio
             await ctx.send("Player is not registered!")
         if banner is None:
             await ctx.send("Banner does not exist!")
+        if banner.banner_type == gacha.BannerType.BEGINNER:
+            await ctx.send("Cannot debug roll on Beginner Banner!")
 
 bot.run(TOKEN)
