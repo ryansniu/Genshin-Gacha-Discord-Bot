@@ -44,13 +44,6 @@ class Banner(ABC):
     def import_data(self):
         pass
 
-# TL;DR
-# Can only pull using a 10 pull
-# Can only pull 2 times
-# Each 10 pull costs 8 blue fates only
-# Uses patch 1.0's character pool, excluding Noelle, Amber, Kaeya, and Lisa
-# No weapons except 3 stars
-# Has its own pity (which does not affect Event or Standard banner pity)
 class BeginnerBanner(Banner):
     excluded_4star_chars = ['amber', 'kaeya', 'lisa', 'noelle']
     guaranteed_4star_char = 'noelle'
@@ -101,6 +94,7 @@ class BeginnerBanner(Banner):
             elif rarity == 3:
                 rarity_pool = self.standard_3star_weaps
             wish = random.choices(rarity_pool)[0]
+            player.add_new_item(wish)
             player.debug_info[rarity - 3] += 1
 
             # formats the output
@@ -167,6 +161,7 @@ class StandardBanner(Banner):
         # get the pool of potential items and then one at random
         rarity_pool = self.standard_5star_items if rarity == 5 else self.standard_4star_items if rarity == 4 else self.standard_3star_items
         wish = random.choices(rarity_pool)[0]
+        player.add_new_item(wish)
         player.debug_info[rarity - 3] += 1
         
         # formats the output
@@ -284,6 +279,7 @@ class EventBanner(Banner):
         elif rarity == 3:
             rarity_pool = self.get_3star_pool(pity)
         wish = random.choices(rarity_pool)[0]
+        player.add_new_item(wish)
         player.debug_info[rarity - 3] += 1
 
         emoji = ":blue_square:"

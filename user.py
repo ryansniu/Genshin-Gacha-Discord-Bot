@@ -15,8 +15,8 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 class Pity:
-    default_vals = [0, False, 0, False]
-    pity_ids = ['curr4StarPity', 'feat4StarPity', 'curr5StarPity', 'feat5StarPity']
+    DEFAULT_VALS = [0, False, 0, False]
+    PITY_IDS = ['curr4StarPity', 'feat4StarPity', 'curr5StarPity', 'feat5StarPity']
 
     def __init__(self, doc, banner_type):
         self.data = doc[str(banner_type.name).lower() + 'Pity']
@@ -27,14 +27,14 @@ class Pity:
         self.soft_4star_pity = 8 if banner_type == BannerType.WEAPON else 9
 
     def increment_pity(self):
-        self.data[self.pity_ids[0]] += 1
-        self.data[self.pity_ids[2]] += 1
+        self.data[self.PITY_IDS[0]] += 1
+        self.data[self.PITY_IDS[2]] += 1
 
     def reset(self, rarity, is_soft_reset):
         if rarity >= 4:
             pity_id = (rarity - 4) * 2
-            self.data[self.pity_ids[pity_id]] = 0
-            self.data[self.pity_ids[pity_id + 1]] = is_soft_reset
+            self.data[self.PITY_IDS[pity_id]] = 0
+            self.data[self.PITY_IDS[pity_id + 1]] = is_soft_reset
     
     def reset_all(self):
         self.reset(4, False)
@@ -45,6 +45,8 @@ class Pity:
 
 
 class Player:
+    HISTORY_LIMIT = 1000
+
     def __init__(self, doc_ref, doc):
         # assumes the player exists
         self.doc_ref = doc_ref
@@ -62,14 +64,32 @@ class Player:
     def get_pity(self, banner_type):
         return self.pities[banner_type.name]
 
+    def add_new_item(self, new_item):
+        # update player history
+        self.doc['history'].insert(0, new_item)
+        if len(self.doc['history']) > self.HISTORY_LIMIT:
+            self.doc['history'].pop()
+        
+        # update player inventory
+        if new_item in self.doc['inventory']:
+            self.doc['inventory'][new_item] += 1
+        else:
+            self.doc['inventory'][new_item] = 1
+
     def get_pity_info(self):
         pass
 
     def get_inventory(self):
-        pass
+        result = ""
+        for item, count in self.doc['inventory'].items():
+            result += item + " " + str(count) + "\n"
+        return result
         
     def get_history(self):
-        pass
+        result = ""
+        for item in self.doc['history']:
+            result += item + ", "
+        return result
 
     def get_stats(self):
         pass
@@ -105,9 +125,9 @@ def get_unique_id(guild, member):
 def create_new_user(guild, member):
     doc_ref = db.collection('users').document(get_unique_id(guild, member))
     if not doc_ref.get().exists:
-        doc = {'username': member.name, 'guild': guild.name, 'totalRolls': 0, 'numBeginnerRolls': 0}
+        doc = {'username': member.name, 'guild': guild.name, 'totalRolls': 0, 'numBeginnerRolls': 0, 'history': [], 'inventory': {}}
         for banner_type in BannerType.__members__:
-            doc[str(banner_type).lower() + 'Pity'] = dict(zip(Pity.pity_ids, Pity.default_vals))
+            doc[str(banner_type).lower() + 'Pity'] = dict(zip(Pity.PITY_IDS, Pity.DEFAULT_VALS))
         doc_ref.set(doc)
         return True
     return False

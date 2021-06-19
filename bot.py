@@ -91,4 +91,22 @@ async def debug_pull(ctx, banner_id, num : int, version = current_genshin_versio
         if banner.banner_type == gacha.BannerType.BEGINNER:
             await ctx.send("Cannot debug roll on Beginner Banner!")
 
+@bot.command(name='get_inventory', help='Returns the player inventory')
+async def get_inventory(ctx):
+    player = user.get_player(ctx.guild, ctx.author)
+    inventory = player.get_inventory()
+    if len(inventory) == 0:
+        await ctx.send("Paimon says you should spend money and roll!")
+    else:
+        await ctx.send(inventory)
+
+@bot.command(name='get_history', help='Returns the player history')
+async def get_history(ctx):
+    player = user.get_player(ctx.guild, ctx.author)
+    history = player.get_history()
+    if len(history) == 0:
+        await ctx.send("Paimon says you should spend money and roll!")
+    else:
+        await ctx.send(history)
+
 bot.run(TOKEN)
